@@ -1,0 +1,94 @@
+ <head>
+      <!-- Basic -->
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <!-- Mobile Metas -->
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+      <!-- Site Metas -->
+      <meta name="keywords" content="" />
+      <meta name="description" content="" />
+      <meta name="author" content="" />
+      <link rel="shortcut icon" th:href="@{http://localhost:8080/images/favicon.png}" type="">
+      <title>Capgemini - Shopping cart</title>
+      <!-- bootstrap core css -->
+      <link rel="stylesheet" type="text/css" th:href="@{http://localhost:8080/css/bootstrap.css}" />
+      <!-- font awesome style -->
+      <link th:href="@{http://localhost:8080/css/font-awesome.min.css}" rel="stylesheet" />
+      <!-- Custom styles for this template -->
+      <link th:href="@{http://localhost:8080/css/style.css}" rel="stylesheet" />
+      <!-- responsive style -->
+      <link th:href="@{http://localhost:8080/css/responsive.css}" rel="stylesheet" />
+	  <style>
+          .payment-option { border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+          .selected { border-color: #0073bb; background: #f0f8ff; }
+          .order-summary { background: #f9f9f9; padding: 15px; border-radius: 5px; }
+      </style>
+	  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  		<script th:inline="javascript">
+			/*<![CDATA[*/
+  			function initiatePayment() {
+  			    fetch('/createOrder', {
+  			        method: 'POST',
+  			        headers: {
+  			            'Content-Type': 'application/json'
+  			        },
+  			        body: JSON.stringify({ amount: '[[${amount}]]', currency: 'INR' }) // Example amount and currency
+  			    })
+  			    .then(response => response.json())
+  			    .then(data => {
+  			        const options = {
+  			            "key": data.keyId, // Your Key Id
+  			            "amount": data.amount, // Amount in smallest currency unit
+  			            "currency": data.currency,
+  			            "name": "Capgemini Store",
+  			            "description": "Test Transaction",
+  			            "order_id": data.orderId, // Order ID from backend
+  			            "handler": function (response) {
+  			                // Handle successful payment, send response to backend for verification
+  			                console.log(response);
+  			                // Call your backend API to verify the payment signature
+  			                fetch('/verifyPayment', {
+  			                    method: 'POST',
+  			                    headers: { 'Content-Type': 'application/json' },
+  			                    body: JSON.stringify(response)
+  			                })
+  			                .then(res => res.json())
+  			                .then(verificationResult => {
+  			                    console.log("Payment verification result:", verificationResult);
+  			                    
+								let successMessageElement = document.getElementById('successMessage');
+						        successMessageElement.textContent = 'Order placed successfully!'; // Display server response
+						        successMessageElement.style.display = 'block'; // Show the message
+								window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
+						        // Optional: Hide the message after a few seconds
+						        setTimeout(() => {
+						            successMessageElement.style.display = 'none';
+									window.location.href = "http://localhost:8080/emptyCart";
+									
+						        }, 3000); 
+								
+  			                });
+  			            },
+  			            "prefill": {
+  			                "name": "Prashant chauhan",
+  			                "email": "prashant.mca2010@gmail.com",
+  			                "contact": "8217410859"
+  			            },
+  			            "notes": {
+  			                "address": "Razorpay Corporate Office"
+  			            },
+  			            "theme": {
+  			                "color": "#3399cc"
+  			            }
+  			        };
+  			        const rzp1 = new Razorpay(options);
+  			        rzp1.open();
+  			    })
+  			    .catch(error => {
+  			        console.error('Error creating order:', error);
+  			    });
+  			}
+			/*]]>*/
+  		</script>
+   </head>
+   

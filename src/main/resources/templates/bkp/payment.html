@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+		<script>
+			function initiatePayment() {
+			    fetch('/createOrder', {
+			        method: 'POST',
+			        headers: {
+			            'Content-Type': 'application/json'
+			        },
+			        body: JSON.stringify({ amount: 100, currency: 'INR' }) // Example amount and currency
+			    })
+			    .then(response => response.json())
+			    .then(data => {
+			        const options = {
+			            "key": data.keyId, // Your Key Id
+			            "amount": data.amount, // Amount in smallest currency unit
+			            "currency": data.currency,
+			            "name": "Capgemini Store",
+			            "description": "Test Transaction",
+			            "order_id": data.orderId, // Order ID from backend
+			            "handler": function (response) {
+			                // Handle successful payment, send response to backend for verification
+			                console.log(response);
+			                // Call your backend API to verify the payment signature
+			                fetch('/api/payment/verifyPayment', {
+			                    method: 'POST',
+			                    headers: { 'Content-Type': 'application/json' },
+			                    body: JSON.stringify(response)
+			                })
+			                .then(res => res.json())
+			                .then(verificationResult => {
+			                    console.log("Payment verification result:", verificationResult);
+			                    // Update UI based on verification
+			                });
+			            },
+			            "prefill": {
+			                "name": "Prashant chauhan",
+			                "email": "prashant.mca2010@gmail.com",
+			                "contact": "8217410859"
+			            },
+			            "notes": {
+			                "address": "Razorpay Corporate Office"
+			            },
+			            "theme": {
+			                "color": "#3399cc"
+			            }
+			        };
+			        const rzp1 = new Razorpay(options);
+			        rzp1.open();
+			    })
+			    .catch(error => {
+			        console.error('Error creating order:', error);
+			    });
+			}
+			
+		</script>
+	</head>
+	
+	<body>
+        <h1>Payment Sample</h1>
+        <form action="/pay" method="post" onsubmit="initiatePayment(); return false;">
+            <label for="amount">Amount:</label>
+            <input type="text" id="amount" name="amount" required>
+            <br><br>
+            <label for="currency">Currency:</label>
+            <input type="text" id="currency" name="currency" required>
+            <br><br>
+            <button type="submit">Pay</button>
+        </form>
+	</body>
+
+</html>

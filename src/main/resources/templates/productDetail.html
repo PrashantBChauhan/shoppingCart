@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+   <div th:replace="~{/includes/CommonHead}"></div>
+   <body class="sub_page">
+      <div class="hero_area">
+         <!-- header section strats -->
+		 <div th:replace="~{/includes/header}"></div>
+         <!-- end header section -->
+      </div>
+      <!-- inner page section -->
+      <section class="inner_page_head">
+         <div class="container_fuild">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="full">
+                     <h3>Product Details</h3>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- end inner page section -->
+      <!-- product section -->
+      <section class="product_section layout_padding">
+         <div class="container"style="max-width: 650px;">
+            <div class="product_details">
+               <div>
+                  <div class="box">
+                     <div class="option_container">
+                        <div class="options" style="cursor: pointer;">  
+						   <a class="option1" id = "add_to_cart" th:onclick="addItemToCart([[${itemDetail.id}]])">
+                           Add To Cart
+                           </a>
+                           <!--a href="/viewCart" class="option2" id="buy_now">
+                           Buy Now
+                           </a-->
+                        </div>
+                     </div>
+                     <div class="img-box">
+                        <img th:src="@{'../images/p' + ${itemDetail.id}} +'.png'" alt="">
+                     </div>
+                     <div class="detail-box" style="margin-left: 180px; margin-right: 180px;">
+                        <h5>
+                           <span th:text="${itemDetail.name}"></span>
+                        </h5>
+                        <h6>
+                           ₹<span th:text="${itemDetail.price}"></span>
+                        </h6>
+                     </div>
+                  </div>
+               </div>
+			  
+            </div>
+            <div class="btn-box">
+               <div class="desc_head" style="padding-bottom: 40px; font-weight: bold;">Description</div>
+			   <div class="desc" style="padding-top: 50px;"> 
+				<ul>
+					<li>Fit 	: Regular</li>
+					<li>Fabric 	: Nylon, Viscon Rayon</li>
+					<li>Colour 	: grey</li>
+					<li>Wash 	: Machine wash</li>
+				</ul>
+			   </div>
+            </div>
+         </div>
+      </section>
+      <!-- end product section -->
+      <!-- footer section -->
+	  <div th:replace="~{/includes/footer :: commonFooter}"></div>
+      <!-- footer section -->
+	  <div th:replace="~{/includes/commonFooter}"></div>
+   </body>
+</html>

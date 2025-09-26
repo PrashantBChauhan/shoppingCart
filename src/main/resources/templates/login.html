@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<div th:replace="~{/includes/CommonHead}"></div>
+   <body class="sub_page">
+      <div class="hero_area">
+         <!-- header section strats -->
+		 <div th:replace="~{/includes/header}"></div>
+         <!-- end header section -->
+      </div>
+      <!-- inner page section -->
+      <section class="inner_page_head">
+         <div class="container_fuild">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="full">
+                     <h3>Sign-in</h3>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- end inner page section -->
+      <!-- why section -->
+      <section class="why_section layout_padding">
+         <div class="container">
+         
+            <div class="row">
+               <div class="col-lg-8 offset-lg-2">
+                  <div class="full" style="padding-left: 150px; padding-right: 150px;">
+                     <form action="/setUserSession" method="post">
+                        <fieldset>
+                           <input type="text" placeholder="Enter your name" id="name" name="name" required />
+                           <input type="password" placeholder="Enter your password" id="pwd" name="password" required />
+                           <input type="submit" value="Sign in" onclick="createSession();"/>
+                        </fieldset>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- end why section -->
+      
+      <!-- footer section -->
+	  <div th:replace="~{/includes/footer :: commonFooter}"></div>
+      <!-- footer section -->
+      <!-- jQery -->
+      <script src="js/jquery-3.4.1.min.js"></script>
+      <!-- popper js -->
+      <script src="js/popper.min.js"></script>
+      <!-- bootstrap js -->
+      <script src="js/bootstrap.js"></script>
+      <!-- custom js -->
+      <script src="js/custom.js"></script>
+	  <!-- common js -->
+      <script src="js/common.js"></script>
+   </body>
+</html>

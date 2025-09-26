@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+   <div th:replace="~{/includes/CommonHead}"></div>
+   <body class="sub_page">
+      <div class="hero_area">
+		 <!-- header section strats -->
+ 		 <div th:replace="~{/includes/header}"></div>
+         <!-- end header section -->
+      </div>
+      <!-- inner page section -->
+      <section class="inner_page_head">
+         <div class="container_fuild">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="full">
+                     <h3>Product Grid</h3>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- end inner page section -->
+      <!-- product section -->
+      <section class="product_section layout_padding">
+         <div class="container">
+            <div class="heading_container heading_center">
+               <h2>
+                  Our <span>products</span>
+               </h2>
+            </div>
+            <div class="row">
+				<div class="col-sm-6 col-md-4 col-lg-3" th:each="item, iterStat : ${itemList}">
+                  <div class="box">
+                     <div class="option_container">
+                        <div class="options">
+                           <a th:href="@{'/productDetails/' + ${iterStat.index+1}}" class="option1">
+                           View
+                           </a>
+						   <!--a href="" class="option2" id = "add_to_cart" th:onclick="addItemToCart( [[${iterStat.index}+1]])">
+                           Add To Cart
+                           </a-->
+                           
+                        </div>
+                     </div>
+                     <div class="img-box">
+                        <img th:src="@{'images/p' + ${iterStat.index+1}} +'.png'" alt="">
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           <span th:text="${item.name}"></span>
+                        </h5>
+                        <h6>
+                           ₹<span th:text="${item.price}"></span>
+                        </h6>
+                     </div>
+                  </div>
+               </div>
+               
+               
+            </div>
+            <div class="btn-box">
+               <a href="">
+               View All products
+               </a>
+            </div>
+         </div>
+      </section>
+      <!-- end product section -->
+      <!-- footer section -->
+	  <div th:replace="~{/includes/footer :: commonFooter}"></div>
+      <!-- footer section -->
+      <div th:replace="~{/includes/commonFooter}"></div>
+   </body>
+</html>

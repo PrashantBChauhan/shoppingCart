@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<div th:replace="~{/includes/CommonHead}"></div>
+   <body class="sub_page">
+      <div class="hero_area">
+         <!-- header section strats -->
+		 <div th:replace="~{/includes/header}"></div>
+         <!-- end header section -->
+      </div>
+      <!-- inner page section -->
+      <section class="inner_page_head">
+         <div class="container_fuild">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="full">
+                     <h3>Address Details</h3>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- end inner page section -->
+      <!-- why section -->
+      <section class="why_section layout_padding">
+         <div class="container">
+			<div id="successMessage" style="display: none; margin-left: 250PX; color:green; font-weight: bold;"></div>
+         
+            <div class="row">
+               <div class="col-lg-8 offset-lg-2">
+                  <div class="full">
+                     <form action="/pay" method="post" onsubmit="initiatePayment(); return false;">
+                        <fieldset>
+							<input type="hidden" id="amount" name="amount" th:value="${amount}" />
+                           <input style="text-transform: none;" type="text" placeholder="Full name" name="name" required />
+                           <input style="text-transform: none;" type="email" placeholder="Email" name="email" required />
+						   <input style="text-transform: none;" type="number" placeholder="Phone number" name="phone_number" size="10" maxlength="10" min="7000000000" max="9999999999" required />
+						   <input style="text-transform: none;" type="text" placeholder="Address" name="address" required />
+							<input style="text-transform: none;" type="text" placeholder="City" name="city" required />
+                            <input style="text-transform: none;" type="text" placeholder="State" name="state" required />
+							<input style="text-transform: none;" type="number" placeholder="Pincode" name="pincode" size="6" maxlength="6" min="1" max="999999" required />
+													  						   
+							<button class="btn  my-2 my-sm-0" type="submit" style="margin-left: 140px;">
+							   <i class="fa check-out-button" aria-hidden="true"> Proceed to Pay </i>
+						   </button>
+                        </fieldset>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- end why section -->
+      
+      <!-- footer section -->
+	  <div th:replace="~{/includes/footer :: commonFooter}"></div>
+      <!-- footer section -->
+      <div th:replace="~{/includes/commonFooter}"></div>
+   </body>
+</html>
